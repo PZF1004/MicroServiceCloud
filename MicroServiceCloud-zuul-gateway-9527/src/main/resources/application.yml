@@ -1,0 +1,30 @@
+server: 
+  port: 9527
+ 
+spring: 
+  application:
+    name: MicroServiceCloud-zuul-gateway     #Spring对外暴露的微服务名字
+ 
+eureka: 
+  client: 
+    service-url: 
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka  
+  instance:
+    instance-id: gateway-9527.com    #注册到Eureka中的实例的别名（自定义服务名称）
+    prefer-ip-address: true 
+ 
+zuul: 
+  #ignored-services: MicroServiceCloud-dept   #忽略这个名字访问，即不能使用原真实服务名访问
+  ignored-services: "*"  #批量忽略所有真实服务名访问
+  prefix: /pzf     #设置统一公共前缀
+  routes: 
+    mydept.serviceId: MicroServiceCloud-dept  #真实的
+    mydept.path: /mydept/**  #虚拟的
+    
+
+info:
+  app.name: pzf-MicroServiceCloud
+  company.name: www.atguigu.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
